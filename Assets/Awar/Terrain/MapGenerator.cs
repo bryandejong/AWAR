@@ -26,11 +26,6 @@ namespace Awar.Terrain
 
         public TerrainType[] Regions;
 
-        private void Start()
-        {
-            GenerateMap();
-        }
-
         public void GenerateMap()
         {
             float[,] noiseMap = Noise.GenerateNoiseMap(Width, Height, Seed, NoiseScale, Octaves, Persistance, Lacunarity, Offset);
