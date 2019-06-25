@@ -6,8 +6,7 @@ namespace Awar.Grid
     public class GridController : MonoBehaviour
     {
         [HideInInspector] int Width, Height;
-
-        [SerializeField] private GridDisplay _gridDisplay = default;
+        
         [SerializeField] private MapGenerator _map = default;
         [SerializeField] private GameObject _cellPrefab = default;
         private AwarGrid Grid;
