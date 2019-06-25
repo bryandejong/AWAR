@@ -10,5 +10,10 @@ namespace Awar.Grid
         {
             Cells = new GridCell[width,height];
         }
+
+        public GridCell GetCell(int x, int y)
+        {
+            return Cells[x, y];
+        }
     }
 }
