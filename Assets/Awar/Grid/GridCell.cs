@@ -7,8 +7,10 @@ namespace Awar.Grid
     {
         [SerializeField] private SpriteRenderer _spriteRenderer = default;
 
-        public void EnableHover()
+
+        public void EnableHover(float alpha)
         {
+            _spriteRenderer.material.color = new Color(.6f, .55f, .8f, alpha);
             _spriteRenderer.enabled = true;
         }
 

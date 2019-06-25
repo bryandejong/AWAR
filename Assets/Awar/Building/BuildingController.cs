@@ -29,11 +29,13 @@ namespace Awar.Building
 
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    GridCell cell = _cellSelector.Hover(hit.point);
+                    GridCell cell = _cellSelector.HoverRadius(hit.point, 3);
                     _placingObject.transform.position = cell.transform.position;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Instantiate(_placingObject, cell.transform.position - new Vector3(0, .1f, 0), new Quaternion(0, 0, 0, 0));
+                    }
                 }
-
-                //TODO Place building when mouse is pressed
             } 
         }
     }
