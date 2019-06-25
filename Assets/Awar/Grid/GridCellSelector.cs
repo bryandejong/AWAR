@@ -11,7 +11,7 @@ namespace Awar.Grid
             _gridController = gridController;
         }
 
-        public void Hover(Vector3 worldPos)
+        public GridCell Hover(Vector3 worldPos)
         {
             GridCell hoveredCell = _gridController.GetCell(worldPos);
             if (hoveredCell != _hovered)
@@ -24,6 +24,7 @@ namespace Awar.Grid
                 _hovered = hoveredCell;
             }
             hoveredCell.EnableHover();
+            return hoveredCell;
         }
     }
 }

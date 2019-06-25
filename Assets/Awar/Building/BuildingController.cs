@@ -7,6 +7,7 @@ namespace Awar.Building
     {
         [SerializeField] public GameObject _placingObject = default;
         [SerializeField] private GridController _gridController = default;
+        [SerializeField] private bool _buildMode = false;
 
         private GridCellSelector _cellSelector;
         private float _zPos;
@@ -20,14 +21,20 @@ namespace Awar.Building
         // Update is called once per frame
         void Update()
         {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = _zPos;
-            Ray ray = UnityEngine.Camera.main.ScreenPointToRay(mousePos);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (_buildMode)
             {
-                _cellSelector.Hover(hit.point);
-            }
+                Vector3 mousePos = Input.mousePosition;
+                mousePos.z = _zPos;
+                Ray ray = UnityEngine.Camera.main.ScreenPointToRay(mousePos);
+
+                if (Physics.Raycast(ray, out var hit))
+                {
+                    GridCell cell = _cellSelector.Hover(hit.point);
+                    _placingObject.transform.position = cell.transform.position;
+                }
+
+                //TODO Place building when mouse is pressed
+            } 
         }
     }
 }
