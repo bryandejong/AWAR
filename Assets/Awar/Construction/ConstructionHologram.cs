@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Awar.Building
+namespace Awar.Construction
 {
-    public class BuildingHologram : MonoBehaviour
+    public class ConstructionHologram : MonoBehaviour
     {
         private static Color _hologramColorValid = new Color(1, 1, 1, .35f);
         private static Color _hologramColorInvalid = new Color(1, .2f, .2f, .35f);

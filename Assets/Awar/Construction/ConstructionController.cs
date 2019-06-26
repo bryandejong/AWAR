@@ -2,21 +2,21 @@
 using Awar.Utils;
 using UnityEngine;
 
-namespace Awar.Building
+namespace Awar.Construction
 {
-    public class BuildingController : MonoBehaviour
+    public class ConstructionController : MonoBehaviour
     {
         [SerializeField] private GridController _gridController = default;
         [SerializeField] private bool _buildMode = false;
 
         private GridCellSelector _cellSelector = default;
 
-        private BuildingObject _placingTemplate;
+        private ConstructionObject _placingTemplate;
         private GameObject _placingObject;
 
-        public void SetBuilding(BuildingObject building)
+        public void SetBuilding(ConstructionObject construction)
         {
-            _placingTemplate = building;
+            _placingTemplate = construction;
             _placingObject = Instantiate(_placingTemplate.gameObject);
             _buildMode = true;
         }
@@ -49,8 +49,8 @@ namespace Awar.Building
         private void PlaceBuilding()
         {
             GameObject placedObject = Instantiate(_placingObject, _placingObject.transform.position, _placingObject.transform.rotation);
-            BuildingObject buildingObject = placedObject.GetComponent<BuildingObject>();
-            buildingObject.PlaceObject();
+            ConstructionObject constructionObject = placedObject.GetComponent<ConstructionObject>();
+            constructionObject.PlaceObject();
 
             CancelBuildMode();   
         }
