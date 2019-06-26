@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Linq.Expressions;
+using UnityEngine;
 
 namespace Awar.Grid
 {
     public class GridCell : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _spriteRenderer = default;
 
-        public void EnableHover()
+
+        public void EnableHover(float alpha)
         {
+            _spriteRenderer.material.color = new Color(.6f, .55f, .8f, alpha);
             _spriteRenderer.enabled = true;
         }
 
