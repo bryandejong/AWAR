@@ -37,7 +37,7 @@ namespace Awar.Construction
                 if (Physics.Raycast(ray, out var hit))
                 {
                     GridCell cell = _cellSelector.HoverRadius(hit.point, 3, (int)_placingTemplate.Dimensions.x, (int)_placingTemplate.Dimensions.y);
-                    _placingObject.transform.position = new Vector3(cell.transform.position.x, 0.05f, cell.transform.position.z);
+                    _placingObject.transform.position = new Vector3(cell.transform.position.x, 0.01f, cell.transform.position.z);
                     if (Input.GetMouseButtonDown(0))
                     {
                         PlaceBuilding();

@@ -47,8 +47,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dimensions: {x: 2, y: 2}
-  _hologram: {fileID: 2810452204197480155}
+  _villageObject: {fileID: 1585097803846192981}
   _frame: {fileID: 3268711349207445664}
+  _hologram: {fileID: 2810452204197480155}
+  _buildEffort: 10
+--- !u!114 &1585097803846192981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062221637388352857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e78ddc80d3e4ac499449a2caeb7f684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3268711349207445664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109caa90fcef1514db2e1c6bfaa22070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Progress: 0
 --- !u!114 &2810452204197480155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +102,7 @@ PrefabInstance:
     - target: {fileID: 6475506499798536393, guid: a030426b42baed844923e9dd46aa2f1c,
         type: 3}
       propertyPath: m_Name
-      value: TentConstructed
+      value: TentBuilding
       objectReference: {fileID: 0}
     - target: {fileID: 6475506499798536393, guid: a030426b42baed844923e9dd46aa2f1c,
         type: 3}
@@ -151,6 +166,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a030426b42baed844923e9dd46aa2f1c, type: 3}
+--- !u!1 &6062221637388352857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6475506499798536393, guid: a030426b42baed844923e9dd46aa2f1c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1007901073169558928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7096001399144501066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8036329399625147098, guid: a030426b42baed844923e9dd46aa2f1c,

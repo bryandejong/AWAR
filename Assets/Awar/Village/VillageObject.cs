@@ -4,6 +4,7 @@
     {
         public override void Initialize()
         {
+            gameObject.SetActive(true);
         }
 
         public override void Tick()

@@ -28,6 +28,8 @@ namespace Awar.Construction
                 return true;
             }
 
+            transform.localScale = transform.localScale + new Vector3(0, progress, 0);
+
             return false;
         }
         public void CompleteConstruction()
