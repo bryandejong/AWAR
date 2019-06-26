@@ -1,42 +1,80 @@
 ﻿using Awar.Grid;
+using Awar.Utils;
 using UnityEngine;
 
 namespace Awar.Building
 {
     public class BuildingController : MonoBehaviour
     {
-        [SerializeField] public GameObject _placingObject = default;
         [SerializeField] private GridController _gridController = default;
         [SerializeField] private bool _buildMode = false;
 
-        private GridCellSelector _cellSelector;
-        private float _zPos;
+        private GridCellSelector _cellSelector = default;
 
-        void Start()
+        private BuildingObject _placingTemplate;
+        private GameObject _placingObject;
+
+        public void SetBuilding(BuildingObject building)
         {
-            _cellSelector = new GridCellSelector(_gridController);
-            _zPos = UnityEngine.Camera.main.nearClipPlane;
+            _placingTemplate = building;
+            _placingObject = Instantiate(_placingTemplate.gameObject);
+            _buildMode = true;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
+        {
+            _cellSelector = new GridCellSelector(_gridController);
+        }
+
+        private void Update()
         {
             if (_buildMode)
             {
-                Vector3 mousePos = Input.mousePosition;
-                mousePos.z = _zPos;
-                Ray ray = UnityEngine.Camera.main.ScreenPointToRay(mousePos);
+                if (HasCancelledBuildMode()) { return; }
+
+                Ray ray = MouseControl.MouseRay();
 
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    GridCell cell = _cellSelector.HoverRadius(hit.point, 3);
-                    _placingObject.transform.position = cell.transform.position;
+                    GridCell cell = _cellSelector.HoverRadius(hit.point, 3, (int)_placingTemplate.Dimensions.x, (int)_placingTemplate.Dimensions.y);
+                    _placingObject.transform.position = new Vector3(cell.transform.position.x, 0.05f, cell.transform.position.z);
                     if (Input.GetMouseButtonDown(0))
                     {
-                        Instantiate(_placingObject, cell.transform.position - new Vector3(0, .1f, 0), new Quaternion(0, 0, 0, 0));
+                        PlaceBuilding();
                     }
                 }
-            } 
+            }
+        }
+
+        private void PlaceBuilding()
+        {
+            GameObject placedObject = Instantiate(_placingObject, _placingObject.transform.position, _placingObject.transform.rotation);
+            BuildingObject buildingObject = placedObject.GetComponent<BuildingObject>();
+            buildingObject.PlaceObject();
+
+            CancelBuildMode();   
+        }
+
+        /// <summary>
+        /// Checks if user pressed a cancel button, and handles cancel behavior
+        /// </summary>
+        /// <returns>True when user cancelled build mode</returns>
+        private bool HasCancelledBuildMode()
+        {
+            if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                CancelBuildMode();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void CancelBuildMode()
+        {
+            _buildMode = false;
+            Destroy(_placingObject);
+            _cellSelector.RemoveSelection();
         }
     }
 }
