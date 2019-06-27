@@ -1,11 +1,12 @@
-﻿using Awar.AI;
+﻿using System.Collections.Generic;
+using Awar.AI;
 using Awar.Tasks.Actions;
 
 namespace Awar.Tasks
 {
     public interface ITaskHandler
     {
-        ITask[] TaskQueue { get; set; }
+        List<ITask> TaskQueue { get; set; }
         IAction CurrentAction { get; set; }
 
         void ScheduleNextTask();
@@ -14,7 +15,7 @@ namespace Awar.Tasks
 
         void SetPriority(ITask task, int priority);
 
-        void QueueTask(ITask task);
+        void AddTask(ITask task);
 
         void RemoveTask(int taskIndex);
 
@@ -22,6 +23,6 @@ namespace Awar.Tasks
     
         bool InProgress();
 
-        void Tick();
+        bool Tick();
     }
 }

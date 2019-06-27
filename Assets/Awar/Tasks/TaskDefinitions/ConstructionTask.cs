@@ -11,39 +11,44 @@ namespace Awar.Tasks.TaskDefinitions
         private ConstructionObject _constructionTarget;
         private TargetPosition _targetPosition;
 
-        public ConstructionTask(string name, ConstructionObject constructionTarget) : base(name)
+        public ConstructionTask(AIBrain brain, ConstructionObject constructionTarget) : base(brain)
         {
             _constructionTarget = constructionTarget;
         }
         
-        public override void Schedule(AIBrain brain)
+        public override bool Schedule()
         {
-            base.Schedule(brain);
+            base.Schedule();
             TargetPosition targetPosition = _constructionTarget.GetEmptyPosition();
 
+            if (targetPosition == null) return false;
+
+            if (targetPosition.TargetedBy != null || targetPosition.Occupant != null)
+            {
+                return false;
+            }
+
             _targetPosition = targetPosition;
-            _targetPosition.TargetedBy = brain;
+            _targetPosition.TargetedBy = Brain;
             
             Actions = new IAction[]
             {
                 new MoveToAction(_targetPosition.transform.position),
                 new ConstructAction(_targetPosition, _constructionTarget), 
             };
-
+            return true;
         }
 
-        public override IAction Tick(AIBrain brain)
+        public override IAction Tick()
         {
-            if (_constructionTarget != null)
-            {
-                if (_targetPosition?.Occupant != brain && _targetPosition)
-                {
-                    return Actions[0];
-                }
+            if (_constructionTarget == null) return null;
 
-                return Actions[1];
+            if (_targetPosition?.Occupant != Brain && _targetPosition)
+            {
+                return Actions[0];
             }
-            return null;
+
+            return Actions[1];
         }
     }
 }

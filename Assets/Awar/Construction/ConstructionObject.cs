@@ -17,6 +17,7 @@ namespace Awar.Construction
         {
             _hologram.SetHologramMode(HologramMode.Disabled);
             Destroy(_hologram.gameObject);
+            VillageController.Get.ConstructionBuildings.Add(this);
             _frame.Initialize();
         }
 
@@ -24,7 +25,7 @@ namespace Awar.Construction
         {
             if (_frame.AddProgress(amount / _buildEffort))
             {
-                
+                VillageController.Get.ConstructionBuildings.Remove(this);
                 _villageObject.Initialize();
                 Destroy(_frame.gameObject);
                 Destroy(this);

@@ -10,8 +10,8 @@ namespace Awar.Tasks
         bool InProgress { get; set; }
         IAction[] Actions { get; set; }
 
-        void Schedule(AIBrain brain);
+        bool Schedule();
 
-        IAction Tick(AIBrain brain);
+        IAction Tick();
     } 
 }

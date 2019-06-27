@@ -8,19 +8,20 @@ namespace Awar.Tasks
     {
         public string Name { get; set; }
         public bool  InProgress { get; set; }
+        protected AIBrain Brain { get; set; }
         public IAction[] Actions { get; set; }
 
-        protected Task(string name)
+        protected Task(AIBrain brain)
         {
-            Name = name;
+            Brain = brain;
         }
         
-        public virtual void Schedule(AIBrain brain)
+        public virtual bool Schedule()
         {
             InProgress = true;
-            Debug.Log("Scheduled actual task!?");
+            return true;
         }
 
-        public abstract IAction Tick(AIBrain brain);
+        public abstract IAction Tick();
     }
 }

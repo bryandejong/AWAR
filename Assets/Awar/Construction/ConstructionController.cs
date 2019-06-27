@@ -1,5 +1,6 @@
 ﻿using Awar.Grid;
 using Awar.Utils;
+using Awar.Village;
 using UnityEngine;
 
 namespace Awar.Construction
