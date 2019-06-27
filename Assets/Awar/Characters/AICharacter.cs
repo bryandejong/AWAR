@@ -26,6 +26,17 @@ namespace Awar.Characters
                     SetTarget(hit.point);
                 }
             }
+
+            if (IsMoving)
+            {
+                Debug.Log("Here");
+                if (_agent.remainingDistance < _agent.stoppingDistance)
+                {
+                    Debug.Log("Removed path");
+                    _agent.ResetPath();
+                    StopMoving();
+                }
+            }
         }
 
         private void SetTarget(Vector3 targetPos)
