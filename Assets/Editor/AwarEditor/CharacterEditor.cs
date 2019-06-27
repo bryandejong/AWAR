@@ -1,0 +1,6 @@
+﻿namespace AwarEditor
+{
+    class CharacterEditor
+    {
+    }
+}

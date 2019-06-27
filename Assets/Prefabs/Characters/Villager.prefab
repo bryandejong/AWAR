@@ -625,7 +625,7 @@ SkinnedMeshRenderer:
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: 289301614986012343, guid: cdafdc6ae39082f43b31a26b80e34682, type: 3}
   m_Bones:
   - {fileID: 8367958318879466651}
@@ -740,7 +740,7 @@ SkinnedMeshRenderer:
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: -1550514412580984892, guid: cdafdc6ae39082f43b31a26b80e34682, type: 3}
   m_Bones:
   - {fileID: 3664186558950122732}
@@ -865,6 +865,7 @@ GameObject:
   - component: {fileID: 8296172667867445301}
   - component: {fileID: 1562954963571233774}
   - component: {fileID: 2235851092755135006}
+  - component: {fileID: 4785636119654566217}
   m_Layer: 0
   m_Name: Villager
   m_TagString: Untagged
@@ -978,6 +979,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 434533348250676374}
   _agent: {fileID: 1562954963571233774}
+--- !u!114 &4785636119654566217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833825262158263295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82f516c891cb5f4e9cae55f9450b1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAlive: 1
+  _aiCharacter: {fileID: 2235851092755135006}
 --- !u!1 &6854816191822994798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1126,7 @@ SkinnedMeshRenderer:
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: -1579241630799410176, guid: cdafdc6ae39082f43b31a26b80e34682, type: 3}
   m_Bones:
   - {fileID: 5426326601273454867}

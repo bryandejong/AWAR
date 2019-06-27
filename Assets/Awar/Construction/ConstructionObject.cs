@@ -1,5 +1,4 @@
 ﻿using Awar.Village;
-using UnityEditor;
 using UnityEngine;
 
 namespace Awar.Construction
@@ -28,21 +27,6 @@ namespace Awar.Construction
                 _villageObject.Initialize();
                 Destroy(_frame.gameObject);
                 Destroy(this);
-            }
-        }
-    }
-
-    [CustomEditor(typeof(ConstructionObject))]
-    public class BuildingObjectEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            ConstructionObject target = this.target as ConstructionObject;
-            DrawDefaultInspector();
-
-            if (GUILayout.Button("Add 2 effort"))
-            {
-                target?.AddEffort(2);
             }
         }
     }
