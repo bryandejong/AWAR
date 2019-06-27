@@ -29,10 +29,8 @@ namespace Awar.Characters
 
             if (IsMoving)
             {
-                Debug.Log("Here");
-                if (_agent.remainingDistance < _agent.stoppingDistance)
+                if ((_agent.remainingDistance < _agent.stoppingDistance) && !_agent.pathPending)
                 {
-                    Debug.Log("Removed path");
                     _agent.ResetPath();
                     StopMoving();
                 }
