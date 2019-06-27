@@ -1,25 +1,26 @@
-﻿using UnityEngine;
+﻿using Awar.AI;
+using Awar.Tasks.Actions;
+using UnityEngine;
 
 namespace Awar.Tasks
 {
-    public class Task : ITask
+    public abstract class Task : ITask
     {
         public string Name { get; set; }
         public bool  InProgress { get; set; }
+        public IAction[] Actions { get; set; }
 
-        public Task(string name)
+        protected Task(string name)
         {
             Name = name;
         }
         
-        public void Execute()
+        public virtual void Schedule(AIBrain brain)
         {
             InProgress = true;
+            Debug.Log("Scheduled actual task!?");
         }
 
-        public void Tick()
-        {
-            Debug.Log(Name + " has ticked");
-        }
+        public abstract IAction Tick(AIBrain brain);
     }
 }

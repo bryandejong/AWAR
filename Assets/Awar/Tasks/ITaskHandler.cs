@@ -1,10 +1,14 @@
-﻿namespace Awar.Tasks
+﻿using Awar.AI;
+using Awar.Tasks.Actions;
+
+namespace Awar.Tasks
 {
     public interface ITaskHandler
     {
         ITask[] TaskQueue { get; set; }
+        IAction CurrentAction { get; set; }
 
-        void ExecuteNextTask();
+        void ScheduleNextTask();
 
         void Prioritize(ITask task);
 

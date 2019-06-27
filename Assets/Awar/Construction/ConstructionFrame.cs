@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using Awar.AI;
 using UnityEngine;
 
 namespace Awar.Construction
@@ -7,6 +8,8 @@ namespace Awar.Construction
     {
         [Range(0, 1)]
         [SerializeField] public float Progress = 0f;
+
+        [SerializeField] private TargetPosition[] _constructionPoints = default;
 
         public void Initialize()
         {
@@ -35,6 +38,19 @@ namespace Awar.Construction
         public void CompleteConstruction()
         {
             gameObject.SetActive(false);
+        }
+
+        public TargetPosition GetEmptyPosition()
+        {
+            for (int i = 0; i < _constructionPoints.Length; i++)
+            {
+                if (_constructionPoints[i].Occupant == null && _constructionPoints[i].TargetedBy == null)
+                {
+                    return _constructionPoints[i];
+                }
+            }
+
+            return null;
         }
     }
 }

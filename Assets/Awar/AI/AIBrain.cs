@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using Awar.Characters;
+using Awar.Construction;
 using Awar.Tasks;
+using Awar.Tasks.TaskDefinitions;
 using UnityEngine;
+using AnimationState = Awar.Characters.AnimationState;
 
 namespace Awar.AI
 {
@@ -12,12 +15,14 @@ namespace Awar.AI
         [SerializeField] private float _updateInterval = .5f;
 
         [SerializeField] private AICharacter _aiCharacter = default;
+        [SerializeField] private ConstructionObject _targetConstruction;
         
         private ITaskHandler _taskHandler;
 
         public void Start()
         {
-            _taskHandler = new TaskHandler();
+            _taskHandler = new TaskHandler(this);
+            _taskHandler.QueueTask(new ConstructionTask("Construct something", _targetConstruction));
             StartCoroutine(Coroutine_AiTick());
         }
 
@@ -39,8 +44,23 @@ namespace Awar.AI
             }
             else
             {
-                _taskHandler.ExecuteNextTask();
+                _taskHandler.ScheduleNextTask();
             }
+        }
+
+        public void SetMovementTarget(Vector3 targetPos)
+        {
+            _aiCharacter.SetTarget(targetPos);
+        }
+
+        public void SetRotationTarget(Vector3 targetRotation)
+        {
+            transform.rotation = Quaternion.LookRotation(targetRotation, transform.up);
+        }
+
+        public void SetAnimationState(AnimationState state)
+        {
+            _aiCharacter.SetAnimation(state);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Awar.Utils;
+﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +26,7 @@ namespace Awar.Characters
             }
         }
 
-        private void SetTarget(Vector3 targetPos)
+        public void SetTarget(Vector3 targetPos)
         {
             if(_agent.SetDestination(targetPos))
             {

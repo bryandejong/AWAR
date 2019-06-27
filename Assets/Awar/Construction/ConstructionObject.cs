@@ -1,4 +1,5 @@
-﻿using Awar.Village;
+﻿using Awar.AI;
+using Awar.Village;
 using UnityEngine;
 
 namespace Awar.Construction
@@ -28,6 +29,11 @@ namespace Awar.Construction
                 Destroy(_frame.gameObject);
                 Destroy(this);
             }
+        }
+
+        public TargetPosition GetEmptyPosition()
+        {
+            return _frame.GetEmptyPosition();
         }
     }
 }

@@ -992,6 +992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isAlive: 1
+  _updateInterval: 0.5
   _aiCharacter: {fileID: 2235851092755135006}
 --- !u!1 &6854816191822994798
 GameObject:

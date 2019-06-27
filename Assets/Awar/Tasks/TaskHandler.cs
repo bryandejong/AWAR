@@ -1,17 +1,26 @@
-﻿namespace Awar.Tasks
+﻿using Awar.AI;
+using Awar.Tasks.Actions;
+using UnityEngine;
+using AnimationState = Awar.Characters.AnimationState;
+
+namespace Awar.Tasks
 {
     public class TaskHandler : ITaskHandler
     {
         public ITask[] TaskQueue { get; set; }
+        public IAction CurrentAction { get; set; }
+        public AIBrain Brain { get; set; }
 
-        public TaskHandler()
+        public TaskHandler(AIBrain brain)
         {
-            TaskQueue = new ITask[5];
+            TaskQueue = new ITask[0];
+            Brain = brain;
         }
 
-        public void ExecuteNextTask()
+        public void ScheduleNextTask()
         {
-            TaskQueue[0].Execute();
+            Debug.Log("Scheduled next task");
+            TaskQueue[0]?.Schedule(Brain);
         }
 
         public void Prioritize(ITask task)
@@ -34,7 +43,8 @@
         public void QueueTask(ITask task)
         {
             ITask[] newQueue = new ITask[TaskQueue.Length + 1];
-            newQueue[TaskQueue.Length + 1] = task;
+            newQueue[TaskQueue.Length] = task;
+            TaskQueue = newQueue;
         }
 
         public void RemoveTask(int taskIndex)
@@ -45,6 +55,20 @@
         public void RemoveTask(ITask task)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void CompleteTask()
+        {
+            if (TaskQueue.Length < 1)
+            {
+                TaskQueue = new ITask[0];
+                return;
+            }
+
+            for (int i = 0; i < TaskQueue.Length - 1; i++)
+            {
+                TaskQueue[i] = TaskQueue[i + 1];
+            }
         }
 
         public bool InProgress()
@@ -61,7 +85,17 @@
         public void Tick()
         {
             ITask task = TaskQueue[0];
-            task.Tick();
+            IAction action = task.Tick(Brain);
+            if (action != null)
+            {
+                CurrentAction = action;
+                action.Execute(Brain);
+            }
+            else
+            {
+                Brain.SetAnimationState(AnimationState.Idle);
+                CompleteTask();
+            }
         }
     }
 }
