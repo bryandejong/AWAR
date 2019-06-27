@@ -29,17 +29,12 @@ namespace Awar.AI
         {
             ExitEvent.Invoke(col.gameObject);
             AIBrain brain = col.gameObject.GetComponent<AIBrain>();
-            ObjectsInPosition.Remove(col.gameObject.GetComponent<AIBrain>());
+            ObjectsInPosition.Remove(brain);
 
             if(Occupant == brain)
             {
                 Occupant = null;
             }
-        }
-
-        public void SetOccupant(AIBrain occupant)
-        {
-            Occupant = occupant;
         }
     }
 
