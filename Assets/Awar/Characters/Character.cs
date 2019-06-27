@@ -4,7 +4,7 @@ namespace Awar.Characters
 {
     public class Character : AwarObject
     {
-        [SerializeField] private Animator _animator = default;
+        [SerializeField] protected Animator Animator = default;
 
         protected bool IsMoving = false;
 
@@ -18,14 +18,32 @@ namespace Awar.Characters
 
         public void Move(Vector3 direction)
         {
-            _animator.SetBool("isMoving", true);
+            SetAnimation(AnimationState.Walking);
             IsMoving = true;
         }
 
         public void StopMoving()
         {
-            _animator.SetBool("isMoving", false);
+            SetAnimation(AnimationState.Idle);
             IsMoving = false;
+        }
+        public void SetAnimation(AnimationState state)
+        {
+            switch (state)
+            {
+                case(AnimationState.Idle):
+                    Animator.SetBool("isMoving", false);
+                    Animator.SetBool("isConstructing", false);
+                    break;
+                case(AnimationState.Walking):
+                    Animator.SetBool("isMoving", true);
+                    Animator.SetBool("isConstructing", false);
+                    break;
+                case(AnimationState.Constructing):
+                    Animator.SetBool("isMoving", false);
+                    Animator.SetBool("isConstructing", true);
+                    break;
+            }
         }
     }
 }

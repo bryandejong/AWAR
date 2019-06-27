@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 1438332642767982719}
   m_Layer: 0
   m_Name: Tent
-  m_TagString: Untagged
+  m_TagString: GridObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
