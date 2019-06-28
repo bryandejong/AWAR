@@ -1,4 +1,5 @@
-﻿using Awar.Utils;
+﻿using Awar.Map.Vegetation;
+using Awar.Utils;
 using UnityEngine;
 
 namespace Awar.Map
@@ -20,33 +21,53 @@ namespace Awar.Map
         public AnimationCurve HeightCurve;
 
         public MapDisplay MapDisplay;
+        public VegetationGenerator VegetationGenerator;
+
+        public bool hasVegetation;
 
         public bool AutoUpdate;
 
         public TerrainType[] Regions;
 
+        [SerializeField]
+        private GameObject vegContainer;
+
         [ExecuteInEditMode]
-        public void Start()
+        public void Awake()
         {
             GenerateMap();
-            Debug.Log("Generated");
         }
 
         public void GenerateMap()
         {
-            float[,] noiseMap = Noise.GenerateNoiseMap(Width, Height, Seed, NoiseScale, Octaves, Persistance, Lacunarity, Offset);
+            float[,] heightMap = Noise.GenerateNoiseMap(Width, Height, Seed, NoiseScale, Octaves, Persistance, Lacunarity, Offset);
             Color[] colorMap = new Color[Width * Height];
+            
+            if (vegContainer != null)
+            {
+                DestroyImmediate(vegContainer);
+            }
+
+            vegContainer = new GameObject("Vegetation Container");
 
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    float currentHeight = noiseMap[x, y];
+                    float currentHeight = heightMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
                         if (currentHeight <= Regions[i].Height)
                         {
                             colorMap[y * Width + x] = Regions[i].Color;
+                            if (Regions[i].VegetationList.Density < Random.Range(0f, 1f)) break;
+
+                            VegetationTree tree = Regions[i].VegetationList.GetTree();
+                            if (tree == null) break;
+                            tree.Initialize();
+                            Instantiate(tree.gameObject,
+                                new Vector3(((Width - 1) / -2f) + x, 0, ((Height - 1) / 2f) - y), Quaternion.identity, vegContainer.transform);
+
                             break;
                         }
                     }
@@ -56,13 +77,13 @@ namespace Awar.Map
             switch (MapDrawMode)
             {
                 case(DrawMode.HeightMap):
-                    MapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
+                    MapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(heightMap));
                     break;
                 case(DrawMode.ColorMap):
                     MapDisplay.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
                     break;
                 case(DrawMode.Mesh):
-                    MapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, HeightMultiplier, HeightCurve), TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
+                    MapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(heightMap, HeightMultiplier, HeightCurve), TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
                     break;
             }
         }
@@ -105,4 +126,5 @@ public struct TerrainType
     public string Name;
     public float Height;
     public Color Color;
+    public VegetationList VegetationList;
 }
