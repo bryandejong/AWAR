@@ -1,5 +1,5 @@
 ﻿using System;
-using Awar.Terrain;
+using Awar.Map;
 using UnityEngine;
 
 namespace Awar.Grid

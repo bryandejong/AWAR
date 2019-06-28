@@ -1,8 +1,7 @@
-﻿using System;
-using Awar.Utils;
+﻿using Awar.Utils;
 using UnityEngine;
 
-namespace Awar.Terrain
+namespace Awar.Map
 {
     public class MapGenerator : MonoBehaviour
     {
@@ -25,6 +24,13 @@ namespace Awar.Terrain
         public bool AutoUpdate;
 
         public TerrainType[] Regions;
+
+        [ExecuteInEditMode]
+        public void Start()
+        {
+            GenerateMap();
+            Debug.Log("Generated");
+        }
 
         public void GenerateMap()
         {

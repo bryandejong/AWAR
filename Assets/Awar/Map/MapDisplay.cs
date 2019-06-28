@@ -1,8 +1,8 @@
-﻿using System;
-using Awar.Utils;
+﻿using Awar.Utils;
+using UnityEditor;
 using UnityEngine;
 
-namespace Awar.Terrain
+namespace Awar.Map
 {
     public class MapDisplay : MonoBehaviour
     {
@@ -20,7 +20,18 @@ namespace Awar.Terrain
         public void DrawMesh(MeshData mesh, Texture2D texture)
         {
             MeshFilter.sharedMesh = mesh.CreateMesh();
-            MeshRenderer.sharedMaterial.mainTexture = texture;
+            MeshRenderer.sharedMaterial.SetTexture("_MainTex", texture);
+
+#if UNITY_EDITOR
+
+            Material src = (Material)AssetDatabase.LoadMainAssetAtPath("Assets/Materials/MaterialMap.mat");
+            AssetDatabase.CreateAsset(texture, "Assets/Resources/MapTexture");
+            src.mainTexture = texture;
+            EditorUtility.SetDirty(src);
+            MeshRenderer.sharedMaterial = src;
+
+#endif
+
         }
     }
 }
