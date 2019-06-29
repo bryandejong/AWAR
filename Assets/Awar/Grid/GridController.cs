@@ -19,8 +19,8 @@ namespace Awar.Grid
 
         public void InitializeGrid()
         {
-            Width = _map.Width - 1;
-            Height = _map.Height - 1;
+            Width = _map.Size / 2;
+            Height = _map.Size / 2;
 
             string gridContainerName = "GridContainer";
             Transform gridContainer = transform.Find(gridContainerName);
@@ -32,7 +32,7 @@ namespace Awar.Grid
 
             gridContainer = new GameObject(gridContainerName).transform;
             gridContainer.parent = transform;
-            gridContainer.position = new Vector3(0 - (_map.Width / 2), .1f,0 + (_map.Height / 2));
+            gridContainer.position = new Vector3(0 - (_map.Size / 2), .1f,0 + (_map.Size / 2));
 
             Grid = GridGenerator.GenerateGrid(gridContainer, Width, Height, _cellPrefab);
 

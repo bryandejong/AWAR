@@ -30,8 +30,6 @@ namespace Awar.Utils
                 }
             }
 
-            
-
             return meshData;
         }
 

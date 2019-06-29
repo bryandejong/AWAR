@@ -1,13 +1,20 @@
 ﻿using Awar.Map.Vegetation;
 using Awar.Utils;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace Awar.Map
 {
     public class MapGenerator : MonoBehaviour
     {
         public DrawMode MapDrawMode;
-        public int Width, Height;
+
+        public Noise.NormalizeMode NormalizeMode;
+        public Material TerrainMaterial;
+
+        [Range(64, 320)]
+        public int Size;
         public float NoiseScale;
 
         [Range(1, 8)]
@@ -20,19 +27,13 @@ namespace Awar.Map
         public float HeightMultiplier;
         public AnimationCurve HeightCurve;
 
-        public MapDisplay MapDisplay;
-        public VegetationGenerator VegetationGenerator;
-
-        public bool hasVegetation;
-
         public bool AutoUpdate;
 
         public TerrainType[] Regions;
 
-        [SerializeField]
-        private GameObject vegContainer;
+        [SerializeField] private GameObject _meshContainer;
+        private int _chunkSize = 64;
 
-        [ExecuteInEditMode]
         public void Awake()
         {
             GenerateMap();
@@ -40,65 +41,112 @@ namespace Awar.Map
 
         public void GenerateMap()
         {
-            float[,] heightMap = Noise.GenerateNoiseMap(Width, Height, Seed, NoiseScale, Octaves, Persistance, Lacunarity, Offset);
-            Color[] colorMap = new Color[Width * Height];
-            
-            if (vegContainer != null)
+            switch (MapDrawMode)
             {
-                DestroyImmediate(vegContainer);
+                case (DrawMode.HeightMap):
+                    Debug.LogWarning("Heightmap is currently not supported");
+                    //MapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(heightMap));
+                    break;
+                case (DrawMode.ColorMap):
+                    Debug.LogWarning("ColorMap is currently not supported");
+                    //MapDisplay.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
+                    break;
+                case (DrawMode.Mesh):
+                    GenerateChunks();
+                    break;
             }
+        }
 
-            vegContainer = new GameObject("Vegetation Container");
+        /// <summary>
+        /// Generates the terrain chunks
+        /// </summary>
+        private void GenerateChunks()
+        {
+            CreateMeshContainer();
 
-            for (int y = 0; y < Height; y++)
+            //Determine amount of chunks
+            int chunks = Size / _chunkSize;
+
+            int chunkOffsetY = 0 - Size / 2;
+
+            //Create chunks
+            for (int y = 0; y < chunks; y++)
             {
-                for (int x = 0; x < Width; x++)
+                int chunkOffsetX = 0 - Size / 2;
+                for (int x = 0; x < chunks; x++)
+                {
+                    float[,] heightMap = GenerateHeightMap(chunkOffsetX, chunkOffsetY);
+                    Color[] colorMap = GenerateColorMap(heightMap);
+                        
+                    GameObject chunk = new GameObject($"Chunk [{x},{y}]");
+                    MapDisplay display = chunk.AddComponent<MapDisplay>();
+                    display.Initialize();
+                    display.DrawMesh(
+                        MeshGenerator.GenerateTerrainMesh(heightMap, HeightMultiplier, HeightCurve), 
+                        TerrainMaterial,
+                        TextureGenerator.TextureFromColorMap(colorMap, _chunkSize, _chunkSize));
+                    chunk.transform.parent = _meshContainer.transform;
+                    chunk.transform.position = new Vector3(chunkOffsetX + _chunkSize / 2, 0, chunkOffsetY + _chunkSize / 2);
+
+                    chunkOffsetX += _chunkSize;
+                }
+
+                chunkOffsetY += _chunkSize;
+            }
+        }
+
+        private float[,] GenerateHeightMap(int chunkOffsetX, int chunkOffsetY)
+        {
+            Vector2 chunkOffset = new Vector2(chunkOffsetX, chunkOffsetY);
+            return Noise.GenerateNoiseMap(
+                _chunkSize + 1, _chunkSize + 1,
+                Seed, NoiseScale, Octaves, Persistance, Lacunarity,
+                Offset + chunkOffset,
+                NormalizeMode);
+        }
+
+        private Color[] GenerateColorMap(float[,] heightMap)
+        {
+            Color[] colorMap = new Color[_chunkSize * _chunkSize];
+
+            for (int y = 0; y < _chunkSize; y++)
+            {
+                for (int x = 0; x < _chunkSize; x++)
                 {
                     float currentHeight = heightMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
                         if (currentHeight <= Regions[i].Height)
                         {
-                            colorMap[y * Width + x] = Regions[i].Color;
-                            if (Regions[i].VegetationList.Density < Random.Range(0f, 1f)) break;
-
-                            VegetationTree tree = Regions[i].VegetationList.GetTree();
-                            if (tree == null) break;
-                            tree.Initialize();
-                            Instantiate(tree.gameObject,
-                                new Vector3(((Width - 1) / -2f) + x, 0, ((Height - 1) / 2f) - y), Quaternion.identity, vegContainer.transform);
-
+                            colorMap[y * _chunkSize + x] = Regions[i].Color;
                             break;
                         }
                     }
                 }
             }
 
-            switch (MapDrawMode)
+            return colorMap;
+        }
+
+        private void CreateMeshContainer()
+        {
+            if (_meshContainer != null)
             {
-                case(DrawMode.HeightMap):
-                    MapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(heightMap));
-                    break;
-                case(DrawMode.ColorMap):
-                    MapDisplay.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
-                    break;
-                case(DrawMode.Mesh):
-                    MapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(heightMap, HeightMultiplier, HeightCurve), TextureGenerator.TextureFromColorMap(colorMap, Width, Height));
-                    break;
+                DestroyImmediate(_meshContainer);
             }
+
+            _meshContainer = new GameObject("MeshContainer");
+            _meshContainer.transform.parent = transform;
         }
 
         private void OnValidate()
         {
-            if (Width < 1)
+            if (Size % _chunkSize != 0)
             {
-                Width = 1;
+                Size = Size - Size % _chunkSize;
             }
 
-            if (Height < 1)
-            {
-                Height = 1;
-            }
+            Mathf.Clamp(Size, 64, 320);
 
             if (Lacunarity < 1)
             {
@@ -116,7 +164,7 @@ namespace Awar.Map
             }
         }
 
-        public enum DrawMode { HeightMap, ColorMap, Mesh};
+        public enum DrawMode { HeightMap, ColorMap, Mesh };
     }
 }
 
@@ -126,5 +174,4 @@ public struct TerrainType
     public string Name;
     public float Height;
     public Color Color;
-    public VegetationList VegetationList;
 }
