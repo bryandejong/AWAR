@@ -85,6 +85,7 @@ namespace Awar.Map
                         MeshGenerator.GenerateTerrainMesh(heightMap, HeightMultiplier, HeightCurve), 
                         TerrainMaterial,
                         TextureGenerator.TextureFromColorMap(colorMap, _chunkSize, _chunkSize));
+                    display.MeshCollider.sharedMesh = display.MeshFilter.sharedMesh;
                     chunk.transform.parent = _meshContainer.transform;
                     chunk.transform.position = new Vector3(chunkOffsetX + _chunkSize / 2, 0, chunkOffsetY + _chunkSize / 2);
 

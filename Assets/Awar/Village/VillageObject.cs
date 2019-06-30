@@ -1,6 +1,8 @@
-﻿namespace Awar.Village
+﻿using Awar.Core;
+
+namespace Awar.Village
 {
-    public class VillageObject : AwarObject
+    public class VillageObject : AwarBehavior
     {
         public override void Initialize()
         {

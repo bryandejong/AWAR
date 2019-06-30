@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Awar.Core;
+using UnityEngine;
 
 namespace Awar.Characters
 {
-    public class Character : AwarObject
+    public class Character : AwarBehavior
     {
         [SerializeField] protected Animator Animator = default;
 

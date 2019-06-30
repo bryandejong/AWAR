@@ -1,6 +1,0 @@
-﻿namespace AwarEditor
-{
-    class CharacterEditor
-    {
-    }
-}

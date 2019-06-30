@@ -1,5 +1,4 @@
-﻿using Awar.Grid;
-using Awar.Utils;
+﻿using Awar.Utils;
 using Awar.Village;
 using UnityEngine;
 
@@ -7,10 +6,7 @@ namespace Awar.Construction
 {
     public class ConstructionController : MonoBehaviour
     {
-        [SerializeField] private GridController _gridController = default;
         [SerializeField] private bool _buildMode = false;
-
-        private GridCellSelector _cellSelector = default;
 
         private ConstructionObject _placingTemplate;
         private GameObject _placingObject;
@@ -24,7 +20,6 @@ namespace Awar.Construction
 
         private void Start()
         {
-            _cellSelector = new GridCellSelector(_gridController);
         }
 
         private void Update()
@@ -37,12 +32,7 @@ namespace Awar.Construction
 
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    GridCell cell = _cellSelector.HoverRadius(hit.point, 3, (int)_placingTemplate.Dimensions.x, (int)_placingTemplate.Dimensions.y);
-                    _placingObject.transform.position = new Vector3(cell.transform.position.x, 0.01f, cell.transform.position.z);
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        PlaceBuilding();
-                    }
+                    throw new System.NotImplementedException("Build-mode has not yet been implemented with the new grid");
                 }
             }
         }
@@ -75,7 +65,6 @@ namespace Awar.Construction
         {
             _buildMode = false;
             Destroy(_placingObject);
-            _cellSelector.RemoveSelection();
         }
     }
 }

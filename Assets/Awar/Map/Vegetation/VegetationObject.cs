@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Awar.Core;
+using UnityEngine;
 
 namespace Awar.Map.Vegetation
 {
-    public class VegetationObject : AwarObject
+    public class VegetationObject : AwarBehavior
     {
         [SerializeField] private GameObject _model = default;
 

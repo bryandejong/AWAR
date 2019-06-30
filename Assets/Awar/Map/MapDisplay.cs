@@ -1,16 +1,18 @@
-﻿using Awar.Utils;
+﻿using Awar.Core;
+using Awar.Utils;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Awar.Map
 {
-    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public class MapDisplay : AwarObject
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
+    public class MapDisplay : AwarBehavior
     {
         // public Renderer Renderer;
         public MeshFilter MeshFilter;
         public MeshRenderer MeshRenderer;
+        public MeshCollider MeshCollider;
 
         /*public void DrawTexture(Texture2D texture)
         {
@@ -22,6 +24,7 @@ namespace Awar.Map
         {
             MeshFilter = GetComponent<MeshFilter>();
             MeshRenderer = GetComponent<MeshRenderer>();
+            MeshCollider = GetComponent<MeshCollider>();
         }
 
         public override void Tick()
