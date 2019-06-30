@@ -10,6 +10,7 @@ namespace Awar.Grid
 
         [SerializeField] private Material _cellMaterial = default;
         [SerializeField] private Mesh _cellMesh = default;
+        [SerializeField] private bool _showGrid;
 
         public void Initialize(int width, int height)
         {
@@ -20,7 +21,7 @@ namespace Awar.Grid
 
         public void Tick()
         {
-            Grid.Draw();
+            if(_showGrid) Grid.Draw();
         }
     }
 }

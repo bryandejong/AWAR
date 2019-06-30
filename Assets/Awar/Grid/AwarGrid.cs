@@ -45,10 +45,13 @@ namespace Awar.Grid
             for (int i = 0; i < _cellMatrices.GetLength(0); i++)
             {
                 int instancesInBatch = Mathf.NextPowerOfTwo(_cellMatrices[i].Length) - 1;
-                if (instancesInBatch < _cellMatrices[i].Length)
+
+                if (instancesInBatch < _cellMatrices[i].Length || instancesInBatch > _cellMatrices[i].Length)
                 {
                     instancesInBatch = _cellMatrices[i].Length;
                 }
+
+
                 Graphics.DrawMeshInstanced(_cellMesh, 0,
                     _cellMaterial,
                     _cellMatrices[i],
