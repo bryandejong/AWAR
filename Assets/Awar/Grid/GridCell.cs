@@ -6,6 +6,7 @@ namespace Awar.Grid
     public class GridCell
     {
         public readonly Vector2 Position;
+        public bool IsEmpty = true;
 
         public GridCell(int x, int y)
         {

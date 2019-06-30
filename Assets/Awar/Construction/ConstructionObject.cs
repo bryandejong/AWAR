@@ -6,12 +6,11 @@ namespace Awar.Construction
 {
     public class ConstructionObject : MonoBehaviour
     {
-        public Vector2 Dimensions;
-
         [SerializeField] private VillageObject _villageObject = default;
         [SerializeField] private ConstructionFrame _frame = default;
         [SerializeField] private ConstructionHologram _hologram = default;
         [SerializeField] private float _buildEffort = 10f;
+        [SerializeField] public Vector2[] Shape = null;
 
         public void PlaceObject()
         {
@@ -35,6 +34,11 @@ namespace Awar.Construction
         public TargetPosition GetEmptyPosition()
         {
             return _frame.GetEmptyPosition();
+        }
+
+        public void SetHologramMode(HologramMode mode)
+        {
+            _hologram.SetHologramMode(mode);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Awar.Utils;
+﻿using Awar.Grid;
+using Awar.Utils;
 using Awar.Village;
 using UnityEngine;
 
@@ -8,18 +9,14 @@ namespace Awar.Construction
     {
         [SerializeField] private bool _buildMode = false;
 
-        private ConstructionObject _placingTemplate;
-        private GameObject _placingObject;
+        private ConstructionObject _constructionObject;
+        private GameObject _placingGameObject;
 
         public void SetBuilding(ConstructionObject construction)
         {
-            _placingTemplate = construction;
-            _placingObject = Instantiate(_placingTemplate.gameObject);
+            _placingGameObject = Instantiate(construction.gameObject);
+            _constructionObject = _placingGameObject.GetComponent<ConstructionObject>();
             _buildMode = true;
-        }
-
-        private void Start()
-        {
         }
 
         private void Update()
@@ -32,18 +29,36 @@ namespace Awar.Construction
 
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    throw new System.NotImplementedException("Build-mode has not yet been implemented with the new grid");
+                    _placingGameObject.transform.position = GridController.SnapToGrid(hit.point);
+                    bool isValidPosition = GridController.Get.CheckIfEmpty(_placingGameObject.transform.position, _constructionObject.Shape);
+
+                    if (isValidPosition == false)
+                    {
+                        _constructionObject.SetHologramMode(HologramMode.Invalid);
+                    }
+                    else
+                    {
+                        _constructionObject.SetHologramMode(HologramMode.Valid);
+                    }
+
+                    if (Input.GetMouseButtonDown(0) && isValidPosition)
+                    {
+                        PlaceBuilding();
+                    }
                 }
             }
         }
 
         private void PlaceBuilding()
         {
-            GameObject placedObject = Instantiate(_placingObject, _placingObject.transform.position, _placingObject.transform.rotation);
+            GameObject placedObject = Instantiate(_placingGameObject, _placingGameObject.transform.position, _placingGameObject.transform.rotation);
+            //Can possibly be refactored into the ConstructionObject's start method
             ConstructionObject constructionObject = placedObject.GetComponent<ConstructionObject>();
             constructionObject.PlaceObject();
+            //
 
-            CancelBuildMode();   
+            GridController.Get.PlaceObjectOnGrid(constructionObject.transform.position, constructionObject.Shape);
+            CancelBuildMode();
         }
 
         /// <summary>
@@ -64,7 +79,7 @@ namespace Awar.Construction
         private void CancelBuildMode()
         {
             _buildMode = false;
-            Destroy(_placingObject);
+            Destroy(_placingGameObject);
         }
     }
 }

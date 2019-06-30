@@ -62,5 +62,16 @@ namespace Awar.Grid
                     0, default, LightProbeUsage.Off, null);
             }
         }
+
+        public bool IsEmpty(int x, int y)
+        {
+            return _cells[x, y].IsEmpty;
+        }
+
+        public GridCell GetCell(int x, int y)
+        {
+            Debug.Log($"{x},{y}");
+            return _cells[x, y];
+        }
     }
 }

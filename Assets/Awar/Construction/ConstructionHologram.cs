@@ -12,15 +12,19 @@ namespace Awar.Construction
 
         public void SetHologramMode(HologramMode mode)
         {
+            Debug.Log(mode);
             if (mode == _mode) { return; }
 
             switch (mode)
             {
                 case(HologramMode.Valid):
+                    SetValid();
                     break;
                 case(HologramMode.Invalid):
+                    SetInvalid();
                     break;
                 case(HologramMode.Disabled):
+                    _mode = HologramMode.Disabled;
                     gameObject.SetActive(false);
                     break;
             }
@@ -28,6 +32,7 @@ namespace Awar.Construction
 
         private void SetInvalid()
         {
+
             _mode = HologramMode.Invalid;
             for (int i = 0; i < _meshes.Length; i++)
             {
@@ -37,6 +42,7 @@ namespace Awar.Construction
 
         private void SetValid()
         {
+
             _mode = HologramMode.Valid;
             for (int i = 0; i < _meshes.Length; i++)
             {
