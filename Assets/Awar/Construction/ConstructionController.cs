@@ -29,23 +29,22 @@ namespace Awar.Construction
 
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    _placingGameObject.transform.position = GridController.SnapToGrid(hit.point);
-                    bool isValidPosition = GridController.Get.CheckIfEmpty(_placingGameObject.transform.position, _constructionObject.Shape);
-
-                    if (isValidPosition == false)
-                    {
-                        _constructionObject.SetHologramMode(HologramMode.Invalid);
-                    }
-                    else
-                    {
-                        _constructionObject.SetHologramMode(HologramMode.Valid);
-                    }
-
-                    if (Input.GetMouseButtonDown(0) && isValidPosition)
-                    {
-                        PlaceBuilding();
-                    }
+                    UpdateBuildMode(hit);
                 }
+            }
+        }
+
+        private void UpdateBuildMode(RaycastHit hit)
+        {
+            _placingGameObject.transform.position = GridController.SnapToGrid(hit.point);
+
+            bool isValidPosition = GridController.Get.CheckIfEmpty(_placingGameObject.transform.position, _constructionObject.Shape);
+
+            _constructionObject.SetHologramMode(isValidPosition == false ? HologramMode.Invalid : HologramMode.Valid);
+
+            if (Input.GetMouseButtonDown(0) && isValidPosition)
+            {
+                PlaceBuilding();
             }
         }
 

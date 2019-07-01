@@ -10,6 +10,15 @@ namespace Awar.Utils
             Global
         };
 
+        public static float[,] GenerateNoiseMap(NoiseSettings settings, int size, Vector2 chunkOffset)
+        {
+            return GenerateNoiseMap(size, size,
+                settings.Seed, settings.NoiseScale,
+                settings.Octaves, settings.Persistance,
+                settings.Lacunarity, settings.Offset + chunkOffset,
+                settings.NormalizeMode);
+        }
+
         public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, int seed, float scale, int octaves, float persistance, float lacunarity, Vector2 offsets, NormalizeMode normalizeMode)
         {
             float[,] noiseMap = new float[mapWidth, mapHeight];

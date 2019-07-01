@@ -1,18 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Awar.Utils;
 using UnityEngine;
 
-public class VegetationGenerator : MonoBehaviour
+namespace Awar.Map.Vegetation
 {
-    // Start is called before the first frame update
-    void Start()
+    public class VegetationGenerator : MonoBehaviour
     {
-        
-    }
+        public NoiseSettings NoiseSettings;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void GenerateVegetation()
+        {
+            Debug.LogError("Vegetation generation is unimplemented!");
+        }
     }
 }

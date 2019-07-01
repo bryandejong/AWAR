@@ -94,10 +94,10 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.194
+    - _Glossiness: 0.45
     - _GlossyReflections: 1
     - _HueVariationKwToggle: 1
-    - _Metallic: 0.039
+    - _Metallic: 0.02
     - _Mode: 0
     - _NormalMapKwToggle: 0
     - _Occlusion: 7.25

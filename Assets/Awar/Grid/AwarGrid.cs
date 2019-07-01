@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using UnityEngine.Rendering;
+using Debug = UnityEngine.Debug;
 
 namespace Awar.Grid
 {
@@ -70,7 +71,6 @@ namespace Awar.Grid
 
         public GridCell GetCell(int x, int y)
         {
-            Debug.Log($"{x},{y}");
             return _cells[x, y];
         }
     }

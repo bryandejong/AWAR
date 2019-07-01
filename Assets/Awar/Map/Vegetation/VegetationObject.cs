@@ -9,7 +9,9 @@ namespace Awar.Map.Vegetation
 
         public override void Initialize()
         {
-            _model.transform.localPosition = new Vector3(Random.Range(-.3f, .3f), 0, Random.Range(-.3f, .3f));
+            _model.transform.localPosition += new Vector3(Random.Range(-.2f, .2f), 0, Random.Range(-.2f, .2f));
+            float randomScale = Random.Range(-.2f, .2f);
+            _model.transform.localScale += new Vector3(randomScale, randomScale, randomScale);
         }
 
         public override void Tick()

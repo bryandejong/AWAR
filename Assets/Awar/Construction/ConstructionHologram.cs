@@ -12,7 +12,6 @@ namespace Awar.Construction
 
         public void SetHologramMode(HologramMode mode)
         {
-            Debug.Log(mode);
             if (mode == _mode) { return; }
 
             switch (mode)

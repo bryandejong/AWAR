@@ -9,10 +9,16 @@ namespace Awar.Core
         [SerializeField] public MapGenerator MapGenerator;
         [SerializeField] public GridController GridController;
 
+        private void Start()
+        {
+            Initialize();
+        }
+
         // Start is called before the first frame update
-        void Awake()
+        public void Initialize()
         {
             GridController.Initialize(MapGenerator.Size, MapGenerator.Size);
+            MapGenerator.GenerateMap();
         }
 
         void Update()
