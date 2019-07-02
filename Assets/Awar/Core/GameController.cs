@@ -8,6 +8,7 @@ namespace Awar.Core
     {
         [SerializeField] public MapGenerator MapGenerator;
         [SerializeField] public GridController GridController;
+        [SerializeField] public TimeController TimeController;
 
         private void Start()
         {
@@ -19,11 +20,13 @@ namespace Awar.Core
         {
             GridController.Initialize(MapGenerator.Size, MapGenerator.Size);
             MapGenerator.GenerateMap();
+            TimeController.Initialize();
         }
 
         void Update()
         {
             GridController.Tick();
+            TimeController.Tick();
         }
     }
 }
