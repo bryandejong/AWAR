@@ -29,6 +29,7 @@ namespace Awar.Core
         public void SetTimeScale(int timeScale)
         {
             TimeScale = timeScale;
+            Time.timeScale = TimeScale;
             _ui.UpdateUI(TimeScale);
         }
     }

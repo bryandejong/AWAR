@@ -1,11 +1,12 @@
-﻿using Awar.Grid;
+﻿using Awar.Core;
+using Awar.Grid;
 using Awar.Utils;
 using Awar.Village;
 using UnityEngine;
 
 namespace Awar.Construction
 {
-    public class ConstructionController : MonoBehaviour
+    public class ConstructionController : AwarBehavior
     {
         [SerializeField] private bool _buildMode = false;
 
@@ -19,7 +20,11 @@ namespace Awar.Construction
             _buildMode = true;
         }
 
-        private void Update()
+        public override void Initialize()
+        {
+        }
+
+        public override void Tick()
         {
             if (_buildMode)
             {

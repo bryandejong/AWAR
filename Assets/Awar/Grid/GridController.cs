@@ -23,13 +23,13 @@ namespace Awar.Grid
 
         public void Tick()
         {
-            if(_showGrid) Grid.Draw();
+            //Grid.Draw();
         }
 
         public static Vector3 SnapToGrid(Vector3 position)
         {
             position.x = Mathf.FloorToInt(position.x);
-            position.z = Mathf.FloorToInt(position.z) + 1;
+            position.z = Mathf.CeilToInt(position.z);
 
             return position;
         }
@@ -51,7 +51,7 @@ namespace Awar.Grid
         public Vector2 WorldToGridPosition(Vector3 worldPosition)
         {
             Vector3 snappedPosition = SnapToGrid(worldPosition);
-            Vector2 gridPosition = new Vector2(snappedPosition.x + Width / 2f, snappedPosition.z + Height / 2f - 1);
+            Vector2 gridPosition = new Vector2(snappedPosition.x + Width / 2f, snappedPosition.z + Height / 2f);
             return gridPosition;
         }
 
