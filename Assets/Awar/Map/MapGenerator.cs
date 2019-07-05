@@ -23,7 +23,7 @@ namespace Awar.Map
 
         [SerializeField] private GameObject _meshContainer;
         [SerializeField] private GameObject _vegetationContainer;
-        [SerializeField] private GameObject _exampleTree;
+        [SerializeField] private GameObject _exampleTree = default;
 
         [Range(64, 320)]
         public int Size = 64;

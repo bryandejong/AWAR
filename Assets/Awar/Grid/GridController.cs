@@ -11,7 +11,6 @@ namespace Awar.Grid
 
         [SerializeField] private Material _cellMaterial = default;
         [SerializeField] private Mesh _cellMesh = default;
-        [SerializeField] private bool _showGrid = default;
 
         public void Initialize(int width, int height)
         {

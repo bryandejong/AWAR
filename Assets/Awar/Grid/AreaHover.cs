@@ -5,7 +5,7 @@ namespace Awar.Grid
 {
     public class AreaHover : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer _renderer;
+        [SerializeField] private SpriteRenderer _renderer = default;
 
         public void SetPosition(Vector3 position)
         {
