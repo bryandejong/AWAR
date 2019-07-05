@@ -26,23 +26,40 @@ namespace Awar.Construction
             if (Physics.Raycast(ray, out RaycastHit hit, 200))
             {
                 Vector3 hitPos = GridController.SnapToGrid(hit.point);
-                Vector2 gridPos = GridController.Get.WorldToGridPosition(hitPos);
                 
                 if (Input.GetMouseButtonDown(0))
                 {
                     _dragStartPos = hitPos;
-                    _areaHover.SetPosition(hitPos);
-                    Debug.Log(gridPos);
+                    _areaHover.SetPosition(_dragStartPos);
                 }
 
                 if (Input.GetMouseButton(0))
                 {
                     _dragEndPos = hitPos;
+                    Vector3 correctedStartPos = _dragStartPos;
                     Vector3 difference = _dragStartPos - _dragEndPos;
-                    difference.x = difference.x < 0 ? Mathf.FloorToInt(difference.x + 1) : Mathf.CeilToInt(difference.x - 1);
-                    difference.z = difference.x < 0 ? Mathf.FloorToInt(difference.z) : Mathf.CeilToInt(difference.z + 1);
+                    if ((int) difference.x < 0) difference.x -= 1;
+                    if ((int) difference.x > 0) difference.x += 1;
+                    if ((int) difference.z < 0) difference.z -= 1;
+                    if ((int) difference.z > 0) difference.z += 1;
+                    if ((int)difference.x == 0) difference.x = -1;
+                    if ((int)difference.z == 0) difference.z = 1;
+
+                    // Horizontal fix
+                    if ((int) difference.x >= 1)
+                    {
+                        correctedStartPos += new Vector3(1, 0, 0);
+
+                    }
+
+                    // Vertical fix
+                    if ((int) difference.z <= -1)
+                    {
+                        correctedStartPos -= new Vector3(0, 0, 1);
+                    }
 
 ;                    Vector2 dimensions = new Vector2(-difference.x, -difference.z);
+                    _areaHover.SetPosition(correctedStartPos);
                     _areaHover.SetDimensions(dimensions);
                 }
                 else

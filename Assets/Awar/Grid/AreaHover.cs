@@ -9,7 +9,7 @@ namespace Awar.Grid
 
         public void SetPosition(Vector3 position)
         {
-            Vector3 newPosition = new Vector3(position.x, .06f, position.z);
+            Vector3 newPosition = new Vector3(position.x, .04f, position.z);
             transform.position = newPosition;
         }
 
