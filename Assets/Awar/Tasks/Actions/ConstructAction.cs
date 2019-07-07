@@ -24,9 +24,7 @@ namespace Awar.Tasks.Actions
                 _started = true;
             }
 
-            if (_constructionObject == null)
-            {
-            }
+            brain.SetAnimationState(AnimationState.Constructing);
 
             _constructionObject.AddEffort(10);
         }

@@ -61,13 +61,41 @@ namespace Awar.Construction
                     Vector2 dimensions = new Vector2(-difference.x, -difference.z);
                     _areaHover.SetPosition(correctedStartPos);
                     _areaHover.SetDimensions(dimensions);
-
-                    Vector3 gridCorrectedPos = _dragStartPos - new Vector3(0, 0, 1);
-                    // Mark all trees
                 }
                 else
                 {
                     _areaHover.SetPosition(hitPos);
+                }
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    Vector3 startPos = new Vector3
+                    {
+                        x = _dragStartPos.x < _dragEndPos.x ? _dragStartPos.x : _dragEndPos.x,
+                        z = _dragStartPos.z < _dragEndPos.z ? _dragStartPos.z - 1 : _dragEndPos.z - 1,
+                    };
+
+                    Vector3 endPos = new Vector3
+                    {
+                        x = _dragStartPos.x > _dragEndPos.x ? _dragStartPos.x : _dragEndPos.x,
+                        z = _dragStartPos.z > _dragEndPos.z ? _dragStartPos.z - 1 : _dragEndPos.z - 1
+                    };
+
+                    Vector2 startCellPos = GridController.Get.WorldToGridPosition(startPos);
+                    Vector2 endCellPos = GridController.Get.WorldToGridPosition(endPos);
+
+                    // Loop through all gridcell positions and mark trees for harvest
+                    for (int y = (int)startCellPos.y; y <= endCellPos.y; y++)
+                    {
+                        for (int x = (int) startCellPos.x; x <= endCellPos.x; x++)
+                        {
+                            GridCell cell = GridController.Get.GetCell(x, y);
+                            if(cell.Vegetation) cell.Vegetation.MarkForHarvest();
+                        }
+                    }
+
+                    // Reset the hover
+                    _areaHover.SetDimensions(new Vector2(1, -1));
                 }
             }
         }

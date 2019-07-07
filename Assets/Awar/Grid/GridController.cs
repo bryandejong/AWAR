@@ -77,6 +77,11 @@ namespace Awar.Grid
             return Grid.GetCell((int)position.x, (int)position.y);
         }
 
+        public GridCell GetCell(int x, int y)
+        {
+            return Grid.GetCell(x, y);
+        }
+
         /// <summary>
         /// Returns the cell at the given world coordinates
         /// </summary>

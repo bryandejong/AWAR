@@ -1,6 +1,7 @@
 ﻿using Awar.Construction;
 using Awar.Grid;
 using Awar.Map;
+using Awar.Village;
 using UnityEngine;
 
 namespace Awar.Core
@@ -12,8 +13,9 @@ namespace Awar.Core
         [SerializeField] public TimeController TimeController;
         [SerializeField] public ConstructionController ConstructionController;
         [SerializeField] public AreaOrderController AreaOrderController;
+        [SerializeField] public VillageController VillageController;
 
-        private void Start()
+        private void Awake()
         {
             Initialize();
         }
@@ -23,6 +25,7 @@ namespace Awar.Core
         {
             GridController.Initialize(MapGenerator.Size, MapGenerator.Size);
             MapGenerator.GenerateMap();
+            VillageController.Initialize();
             TimeController.Initialize();
             ConstructionController.Initialize();
             AreaOrderController.Initialize();

@@ -1,7 +1,5 @@
 ﻿using Awar.Core;
 using Awar.Utils;
-using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Awar.Map
