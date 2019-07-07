@@ -112,9 +112,9 @@ namespace Awar.Map
                     Vector3 position = new Vector3(x + offsetX,
                        HeightCurve.Evaluate(heightMap[x, y]) * HeightMultiplier,
                        offsetY + _chunkSize - y);
-                    GameObject spawnedTree = Instantiate(_exampleTree, position, Quaternion.identity, _vegetationContainer.transform);
-                    GridController.Get.PlaceObjectOnGrid(spawnedTree.transform.position + new Vector3(0, 0, 1), new[]{new Vector2(0, 0)});
-                    spawnedTree.GetComponent<VegetationObject>().Initialize();
+                    GameObject spawnedTree = Instantiate(_exampleTree, position, Quaternion.identity, _vegetationContainer.transform);VegetationObject vegetationObject = spawnedTree.GetComponent<VegetationObject>();
+                    vegetationObject.Initialize();
+                    GridController.Get.GetCellAtWorldPosition(position - new Vector3(0, 0, 1)).Vegetation = vegetationObject;
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Awar.Grid
 {
@@ -38,7 +39,7 @@ namespace Awar.Grid
             Vector2 gridPosition = WorldToGridPosition(origin);
             for (int i = 0; i < points.Length; i++)
             {
-                if (!Grid.IsEmpty((int) (points[i].x + gridPosition.x), (int) (points[i].y + gridPosition.y)))
+                if (!Grid.IsEmpty((int) (gridPosition.x + points[i].x), (int) (gridPosition.y + points[i].y)))
                 {
                     return false;
                 }
@@ -64,6 +65,27 @@ namespace Awar.Grid
                     (int) (points[i].x + gridPosition.x), 
                     (int) (points[i].y + gridPosition.y)).IsEmpty = false;
             }
+        }
+
+        /// <summary>
+        /// Returns the cell at the given grid coordinates
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public GridCell GetCell(Vector2 position)
+        {
+            return Grid.GetCell((int)position.x, (int)position.y);
+        }
+
+        /// <summary>
+        /// Returns the cell at the given world coordinates
+        /// </summary>
+        /// <param name="worldPos"></param>
+        /// <returns></returns>
+        public GridCell GetCellAtWorldPosition(Vector3 worldPos)
+        {
+            Vector2 gridPos = WorldToGridPosition(worldPos);
+            return GetCell(gridPos);
         }
     }
 }

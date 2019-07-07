@@ -1,11 +1,13 @@
 ﻿using Awar.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Awar.Map.Vegetation
 {
     public class VegetationObject : AwarBehavior
     {
         [SerializeField] private GameObject _model = default;
+        [SerializeField] private Canvas _canvas = default;
 
         public override void Initialize()
         {
@@ -16,6 +18,11 @@ namespace Awar.Map.Vegetation
 
         public override void Tick()
         {
+        }
+
+        public void MarkForHarvest()
+        {
+            _canvas.gameObject.SetActive(true);
         }
     }
 }

@@ -81,8 +81,8 @@ MonoBehaviour:
   _hologram: {fileID: 8586775780429841945}
   _buildEffort: 50
   Shape:
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}
+  - {x: 0, y: -1}
+  - {x: 1, y: -1}
 --- !u!114 &4357928966760528222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +199,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stockpile_Log_Hologram
       objectReference: {fileID: 0}
+    - target: {fileID: 1895463698566320256, guid: 36337d4716be63143bafdfb2bd5c2d84,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb122f2b6913a3c44bf45b34876e9c3e, type: 2}
     - target: {fileID: 8036329399625147098, guid: 36337d4716be63143bafdfb2bd5c2d84,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -254,11 +259,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1895463698566320256, guid: 36337d4716be63143bafdfb2bd5c2d84,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: bb122f2b6913a3c44bf45b34876e9c3e, type: 2}
     - target: {fileID: 1438332642767982719, guid: 36337d4716be63143bafdfb2bd5c2d84,
         type: 3}
       propertyPath: m_Extents.x
